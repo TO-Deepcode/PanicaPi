@@ -31,3 +31,24 @@ In addition to these extension there a few settings that are also useful to enab
 - Test the API functionality by navigating to `/docs` URL to view the Swagger UI
 - Configure your Python test in the Test Panel or by triggering the **Python: Configure Tests** command from the Command Palette
 - Run tests in the Test Panel or by clicking the Play Button next to the individual tests in the `test_main.py` file
+
+## Environment Variables (Render, Vercel, Server)
+
+To securely use API keys and other secrets, set environment variables in your deployment platform (e.g., Render).
+
+**How to set on Render:**
+1. Go to your service in the Render dashboard.
+2. Find the **Environment** or **Environment Variables** section.
+3. Add a variable named `CP_KEY` and set its value to your CryptoPanic API key.
+4. Save and redeploy your service.
+
+**How it works in code:**
+The API key is read from the environment using:
+```python
+import os
+key = os.getenv("CP_KEY")
+```
+If you send the key as a header (`X-CP-KEY`), it will be used instead. Otherwise, the environment variable is used.
+
+**Example endpoint:**
+- `/posts` — Proxy to CryptoPanic API, requires `X-CP-KEY` header or `CP_KEY` environment variable.
